@@ -13,17 +13,25 @@
           class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
         >
           <button
+            v-if="isLogin"
+            @click="logout"
+            class="py-2 px-4 bg-indigo-500 font-bold text-white rounded hover:bg-indigo-600"
+          >
+            Sign Out
+          </button>
+          <button
+            v-else
+            @click="signIn"
             class="py-2 px-4 bg-indigo-500 font-bold text-white rounded hover:bg-indigo-600"
           >
             Sign In
           </button>
           <div class="ml-3 relative">
             <div>
-              <span class="sr-only">Open user menu</span>
               <img
                 class="h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                alt=""
+                v-if="user"
+                :src="user.photoUrl"
               />
             </div>
           </div>
@@ -32,3 +40,9 @@
     </div>
   </nav>
 </template>
+
+<script setup>
+import { useAuth } from "@/firebase";
+
+const { user, isLogin, signIn, logout } = useAuth();
+</script>
