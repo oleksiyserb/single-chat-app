@@ -7,6 +7,15 @@ import {
   onAuthStateChanged,
   signOut,
 } from "firebase/auth";
+import {
+  collection,
+  getFirestore,
+  onSnapshot,
+  addDoc,
+  query,
+  orderBy,
+  limit,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyA5d9_ltK2Sk-p1R6fZt0X8_hA2fFqHVng",
@@ -19,6 +28,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 // UseAuth Hook
 export const useAuth = () => {
@@ -50,4 +60,44 @@ export const useAuth = () => {
   };
 
   return { user, isLogin, signIn, logout };
+};
+
+// Firestore
+const messagesCollection = collection(db, "messages");
+const messagesQuery = query(
+  messagesCollection,
+  orderBy("createdAt", "desc"),
+  limit(50)
+);
+
+// Use Chat Hook
+export const useChat = () => {
+  const messages = ref([]);
+
+  const unsubscribe = onSnapshot(messagesQuery, (snapshot) => {
+    messages.value = snapshot.docs
+      .map((message) => ({
+        id: message.id,
+        ...message.data(),
+      }))
+      .reverse();
+  });
+  onUnmounted(unsubscribe);
+
+  const { user, isLogin } = useAuth();
+  const sendMessage = (text) => {
+    if (!isLogin) return;
+
+    const { uid, displayName, photoUrl } = user.value;
+
+    addDoc(messagesCollection, {
+      userId: uid,
+      userName: displayName,
+      photoUrl: photoUrl,
+      text: text,
+      createdAt: new Date().getTime(),
+    });
+  };
+
+  return { messages, sendMessage };
 };

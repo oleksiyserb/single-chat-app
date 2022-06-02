@@ -7,9 +7,9 @@
 </template>
 
 <script setup>
-import TheHeader from "./components/TheHeader.vue";
-import TheChat from "./components/TheChat.vue";
-import SendArea from "./components/SendArea.vue";
+import TheHeader from "./components/layouts/TheHeader.vue";
+import TheChat from "./components/chat/TheChat.vue";
+import SendArea from "./components/chat/SendArea.vue";
 </script>
 
 <style>

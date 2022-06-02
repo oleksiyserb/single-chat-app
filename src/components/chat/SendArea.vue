@@ -1,9 +1,13 @@
 <template>
-  <footer class="fixed bottom-0 left-0 right-0 bg-gray-900">
+  <footer class="fixed bottom-0 left-0 right-0 bg-gray-900" v-if="isLogin">
     <div class="max-w-7xl mx-auto px-8">
       <div class="w-full">
-        <form class="flex items-center justify-between w-full p-3">
+        <form
+          class="flex items-center justify-between w-full p-3"
+          @submit.prevent="send"
+        >
           <input
+            v-model.trim="text"
             type="text"
             placeholder="Message"
             class="block w-full py-2 pl-4 mr-3 bg-gray-100 rounded-full outline-none focus:text-gray-700"
@@ -27,3 +31,19 @@
     </div>
   </footer>
 </template>
+
+<script setup>
+import { ref } from "vue";
+import { useChat } from "../../firebase";
+import { useAuth } from "../../firebase";
+
+const text = ref("");
+
+const { sendMessage } = useChat();
+const { isLogin } = useAuth();
+
+const send = () => {
+  sendMessage(text.value);
+  text.value = "";
+};
+</script>
