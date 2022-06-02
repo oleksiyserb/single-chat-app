@@ -1,5 +1,5 @@
 <template>
-  <footer class="fixed bottom-0 left-0 right-0 bg-gray-900" v-if="isLogin">
+  <footer class="fixed bottom-0 left-0 right-0 bg-gray-900">
     <div class="max-w-7xl mx-auto px-8">
       <div class="w-full">
         <form
@@ -35,12 +35,10 @@
 <script setup>
 import { ref } from "vue";
 import { useChat } from "../../firebase";
-import { useAuth } from "../../firebase";
 
 const text = ref("");
 
 const { sendMessage } = useChat();
-const { isLogin } = useAuth();
 
 const send = () => {
   sendMessage(text.value);

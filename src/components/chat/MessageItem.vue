@@ -10,7 +10,7 @@
         <span class="block">{{ text }}</span>
       </div>
     </div>
-    <img class="inline-block w-9 h-9 rounded-full ml-2" :src="photoUrl" />
+    <img class="inline-block w-9 h-9 rounded-full ml-2 mt-2" :src="photoUrl" />
   </li>
   <li class="flex justify-start items-center shrink" v-else>
     <img class="inline-block w-9 h-9 rounded-full mr-2" :src="photoUrl" />

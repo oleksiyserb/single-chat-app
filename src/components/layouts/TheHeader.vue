@@ -1,5 +1,5 @@
 <template>
-  <nav class="bg-gray-800">
+  <header class="bg-gray-800 fixed top-0 left-0 right-0 z-10">
     <div class="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
       <div class="relative flex items-center justify-between h-16">
         <div class="flex-1 flex items-center justify-start">
@@ -38,11 +38,11 @@
         </div>
       </div>
     </div>
-  </nav>
+  </header>
 </template>
 
 <script setup>
-import { useAuth } from "@/firebase";
+import { useAuth } from "../../firebase";
 
 const { user, isLogin, signIn, logout } = useAuth();
 </script>
